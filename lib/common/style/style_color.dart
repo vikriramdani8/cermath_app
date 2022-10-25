@@ -8,4 +8,10 @@ class StyleColor {
   Color colorRed = HexColor('FC6F7E');
   Color colorPurple = HexColor('7C3694');
   Color colorGrey = HexColor('464646');
+
+  final List<Color> kDefaultRainbowColors = [
+    Colors.redAccent,
+    Colors.orangeAccent,
+    HexColor('7C3694'),
+  ];
 }

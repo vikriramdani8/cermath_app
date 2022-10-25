@@ -4,10 +4,11 @@ import 'package:cermath_app/constants/constant.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ServiceCommon{
+class ServiceCommon {
   final String _url = ApiConstants.baseUrl;
   var _token = "";
-  setHeaders() => {'accept': 'application/json', 'Authorization': 'Bearer $_token'};
+  setHeaders() =>
+      {'accept': 'application/json', 'Authorization': 'Bearer $_token'};
 
   getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -38,5 +39,16 @@ class ServiceCommon{
     return await http.get(Uri.parse(fullUrl), headers: setHeaders());
   }
 
+  getProfil(userId) async {
+    await getToken();
+    var fullUrl = "$_url/users/profile/${userId.toString()}";
+    return await http.get(Uri.parse(fullUrl), headers: setHeaders());
+  }
 
+  updateProfile(String userId, data) async {
+    await getToken();
+    var fullUrl = "$_url/users/changeProfile/$userId";
+    return await http.put(Uri.parse(fullUrl), body: data, headers: setHeaders(),
+    );
+  }
 }

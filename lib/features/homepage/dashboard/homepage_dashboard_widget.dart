@@ -5,8 +5,7 @@ import 'package:cermath_app/common/style/style_text.dart';
 import 'package:cermath_app/models/model_materi.dart';
 import 'package:flutter/material.dart';
 
-class HomepageDashboardWidget{
-
+class HomepageDashboardWidget {
   StyleText styleText = new StyleText();
 
   Widget materi({required ModelMateri mteri, required BuildContext context}) {
@@ -60,21 +59,24 @@ class HomepageDashboardWidget{
     }
   }
 
-  Widget splitMateri({required List<ModelMateri> temp, required BuildContext context}) {
+  Widget splitMateri(
+      {required List<ModelMateri> temp, required BuildContext context}) {
     return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: temp
             .map(
               (mteri) => Container(
-            width: 90,
-            height: 140,
-            child: materi(mteri: mteri, context: context),
-          ),
-        ).toList());
+                width: 90,
+                height: 140,
+                child: materi(mteri: mteri, context: context),
+              ),
+            )
+            .toList());
   }
 
-  Widget kategoriMateri({required List<ModelMateri> listMateri, required BuildContext context}) {
+  Widget kategoriMateri(
+      {required List<ModelMateri> listMateri, required BuildContext context}) {
     var tempMateri = [];
     var chunkSize = 3;
     for (var i = 0; i < listMateri.length; i += 3) {
@@ -90,8 +92,9 @@ class HomepageDashboardWidget{
             mainAxisSize: MainAxisSize.max,
             children: tempMateri
                 .map((e) => Container(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: splitMateri(temp: e, context: context),
-            )).toList()));
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: splitMateri(temp: e, context: context),
+                    ))
+                .toList()));
   }
 }

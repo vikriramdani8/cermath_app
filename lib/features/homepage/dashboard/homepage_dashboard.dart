@@ -115,7 +115,7 @@ class _HomepageDashboardState extends State<HomepageDashboard> {
                   children: [
                     Container(
                       child: Text(
-                        'Hi, Vikri',
+                        'Hi, ${modelUser?.fullname}',
                         style: styleText.openSansBold(color: styleColor.colorRed, size: 20.0, weightfont: true)
                       ),
                     ),
@@ -155,8 +155,6 @@ class _HomepageDashboardState extends State<HomepageDashboard> {
                           onChanged: (value) {
                             setState(() {
                               _classValue = value as String;
-
-                              print(_classValue);
                               getMateri(_classValue);
                             });
                           },

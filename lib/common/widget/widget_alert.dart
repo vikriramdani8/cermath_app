@@ -1,6 +1,9 @@
+import 'package:cermath_app/common/style/style_color.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 class WidgetAlert{
+
   showLoaderDialog(BuildContext context){
     AlertDialog alert=AlertDialog(
       content: Row(

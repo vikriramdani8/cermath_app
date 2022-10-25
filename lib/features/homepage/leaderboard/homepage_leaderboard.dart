@@ -1,4 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:cermath_app/features/homepage/leaderboard/leaderboard_widget.dart';
+import 'package:cermath_app/models/model_profile.dart';
+import 'package:cermath_app/models/model_user.dart';
+import 'package:cermath_app/services/service_common.dart';
+import 'package:cermath_app/services/service_leaderboard.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cermath_app/common/style/style_color.dart';
@@ -6,6 +12,7 @@ import 'package:cermath_app/common/widget/widget_shared.dart';
 import 'package:cermath_app/common/style/style_common.dart';
 import 'package:cermath_app/common/style/style_text.dart';
 import 'package:cermath_app/common/widget/widget_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomepageLeaderboard extends StatefulWidget {
   const HomepageLeaderboard({Key? key}) : super(key: key);
@@ -21,14 +28,57 @@ class _HomepageLeaderboardState extends State<HomepageLeaderboard> {
   StyleCommon styleCommon = new StyleCommon();
   WidgetShared widgetShared = new WidgetShared();
   WidgetAlert widgetAlert = new WidgetAlert();
+  ModelUser? modelUser;
+  ModelProfil? modelProfil;
+
+  var _loading = true;
+  LeaderboardWidget leaderboardWidget = new LeaderboardWidget();
+
+  @override
+  void initState() {
+    super.initState();
+    checkAuth();
+  }
+
+  Future<void> checkAuth() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userPref = prefs.getString('user');
+    bool? login = prefs.getBool('login');
+
+    if (login == true && userPref != null) {
+      var userMap = jsonDecode(userPref);
+      modelUser = ModelUser.fromJson(userMap);
+      getProfilData();
+    }
+  }
+
+  Future<void> getProfilData() async {
+    var responses = await ServiceCommon().getProfil(modelUser?.users_id);
+    var resultBody = json.decode(responses.body);
+
+    if(resultBody['success']){
+      modelProfil = ModelProfil.fromJson(resultBody['data']);
+      _loading = false;
+      setState(() {});
+    }
+  }
+
+  Future<void> getLeaderboard(lessonId) async {
+    var responses = await ServiceLeaderboard().getLeaderboard(lessonId);
+    var resultBody = json.decode(responses.body);
+    return resultBody['data'];
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    var heightList = height-90-200-kBottomNavigationBarHeight-50;
 
     return SafeArea(
-        child: Column(
+        child: _loading ?
+        widgetShared.showLoading() :
+        Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -94,6 +144,7 @@ class _HomepageLeaderboardState extends State<HomepageLeaderboard> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        // Profile
                         Container(
                           width: 90,
                           height: 90,
@@ -108,11 +159,11 @@ class _HomepageLeaderboardState extends State<HomepageLeaderboard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Vikri Ramdhani',
+                                modelUser!.fullname,
                                 style: styleText.openSansBold(color: Colors.white, size: 18.0, weightfont: true),
                               ),
                               Container(
-                                width: 100,
+                                padding: const EdgeInsets.symmetric(horizontal: 10),
                                 height: 30,
                                 decoration: BoxDecoration(
                                   color: styleColor.colorRed,
@@ -120,7 +171,7 @@ class _HomepageLeaderboardState extends State<HomepageLeaderboard> {
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  '4500 Exp',
+                                  '${modelProfil!.score} XP',
                                   style: styleText.openSansBold(color: Colors.white, size: 17.0, weightfont: false),
                                 ),
                               )
@@ -134,7 +185,7 @@ class _HomepageLeaderboardState extends State<HomepageLeaderboard> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               height: 90,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -145,102 +196,51 @@ class _HomepageLeaderboardState extends State<HomepageLeaderboard> {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        bottomLeft: Radius.circular(30),
-                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
                       border: Border.all(
                           color: Colors.grey,
                           width: 1
                       ),
                     ),
                     child: Text(
-                      'Teman',
-                      style: styleText.openSansBold(color: Colors.black87, size: 17.0, weightfont: false),
-                    ),
-                  ),
-                  Container(
-                    width: 130,
-                    height: 40,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(30),
-                        bottomRight: Radius.circular(30),
+                      'Rank Score',
+                      style: styleText.openSansBold(
+                          color: Colors.black87,
+                          size: 17.0,
+                          weightfont: false
                       ),
-                      border: Border.all(
-                          color: Colors.grey,
-                          width: 1
-                      ),
-                    ),
-                    child: Text(
-                      'Global',
-                      style: styleText.openSansBold(color: Colors.black87, size: 17.0, weightfont: false),
                     ),
                   ),
                 ],
               ),
             ),
             Container(
-              height: height-90-200-kBottomNavigationBarHeight-50,
+              height: heightList,
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      height: 80,
-                      decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(width: 1.0, color: Colors.grey.shade300),
-                          )
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 40,
-                            alignment: Alignment.centerRight,
-                            padding: EdgeInsets.only(right: 10),
-                            child: Text(
-                              '1',
-                              style: styleText.openSansBold(color: Colors.black87, size: 18.0, weightfont: true),
-                            ),
-                          ),
-                          Container(
-                            width: 80,
-                            alignment: Alignment.center,
-                            child: Container(
-                              width: 60,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                  color: Colors.redAccent,
-                                  borderRadius: BorderRadius.circular(35)
+                    FutureBuilder(
+                      future: getLeaderboard('278617e6-db41-4cb6-858a-e117bc415a7b'),
+                      builder: (Context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          if (snapshot.hasError) {
+                            return Center(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {});
+                                },
                               ),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Vikri Ramdhani',
-                                  style: styleText.openSansBold(color: Colors.black87, size: 17.0, weightfont: true),
-                                ),
-                                Text(
-                                  '4500 Exp',
-                                  style: styleText.openSansBold(color: Colors.black87, size: 16.0, weightfont: false),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                            );
+                          }
+                          if (snapshot.hasData) {
+                            List data = snapshot.data as List;
+                            return leaderboardWidget.listleaderBoard(data, heightList);
+                          }
+                        }
+                        return Center(child: CircularProgressIndicator());
+                      },
                     ),
                   ],
                 ),

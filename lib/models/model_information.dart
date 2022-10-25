@@ -26,7 +26,7 @@ class Gender {
 
   factory Gender.fromJson(dynamic json){
     return Gender(
-        id: json['genderId'] ?? "",
+        id: json['genderId'] ?? 0,
         value: json['genderName'] ?? ""
     );
   }

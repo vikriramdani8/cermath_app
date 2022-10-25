@@ -47,6 +47,7 @@ class _LoginInformationState extends State<LoginInformation> {
   var _userTypeValue = "";
   var _classValue = "";
   var _token = "";
+  var _loading = true;
 
   Future<void> checkAuth() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -95,6 +96,8 @@ class _LoginInformationState extends State<LoginInformation> {
       Iterable data = resultBody['data'];
       classList = List<Classes>.from(data.map((model) => Classes.fromJson(model)));
       _classValue = classList[0].id.toString();
+
+      _loading = false;
       setState(() {});
     }
   }
@@ -136,8 +139,12 @@ class _LoginInformationState extends State<LoginInformation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: styleColor.colorPurple,
-        body: SingleChildScrollView(
+      backgroundColor: _loading ? Colors.white : styleColor.colorPurple,
+        body: _loading ?
+        Center(
+          child: widgetShared.showLoading(),
+        ) :
+        SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
@@ -155,14 +162,14 @@ class _LoginInformationState extends State<LoginInformation> {
                         alignment: Alignment.center,
                         child: Text(
                           'cerMath',
-                          style: styleText.poppinsBold(color: styleColor.colorRed, size: 35.00, weightfont: true)
+                          style: styleText.poppinsBold(color: Colors.white, size: 35.00, weightfont: true)
                         ),
                       ),
                       Container(
                         alignment: Alignment.center,
                         child: Text(
                           'Mohon isi semua informasi',
-                          style: styleText.poppinsBold(color: styleColor.colorRed, size: 20.00, weightfont: false)
+                          style: styleText.poppinsBold(color: Colors.white, size: 20.00, weightfont: false)
                         ),
                       ),
                     ],

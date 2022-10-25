@@ -100,7 +100,6 @@ class _LoginState extends State<Login> {
         } else {
           widgetAlert.showErrorSnackbar("Login failed", context);
         }
-
       } else {
         widgetAlert.showErrorSnackbar(resultBody['message'], context);
       }

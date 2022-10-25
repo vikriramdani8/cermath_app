@@ -21,12 +21,6 @@ class QuizList extends StatefulWidget {
 
 class _QuizListState extends State<QuizList> {
 
-  @override
-  void initState() {
-    super.initState();
-    checkAuth();
-  }
-
   StyleText styleText = new StyleText();
   StyleColor styleColor = new StyleColor();
   StyleCommon styleCommon = new StyleCommon();
@@ -42,7 +36,6 @@ class _QuizListState extends State<QuizList> {
     if (lessonId != arguments['lessonId']) {
       lessonId = arguments['lessonId'];
       lessonName = arguments['lessonName'];
-      getListQuiz(lessonId);
     }
   }
 
@@ -59,10 +52,9 @@ class _QuizListState extends State<QuizList> {
   }
 
   Future<void> getListQuiz(lessonId) async {
+    await checkAuth();
     var responses = await ServiceMateri().getListQuizByLessonId(modelUser?.users_id, lessonId);
     var resultBody = json.decode(responses.body);
-
-    print(resultBody['data']);
     return resultBody['data'];
   }
 
