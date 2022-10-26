@@ -222,7 +222,7 @@ class _HomepageLeaderboardState extends State<HomepageLeaderboard> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     FutureBuilder(
-                      future: getLeaderboard('278617e6-db41-4cb6-858a-e117bc415a7b'),
+                      future: getLeaderboard(modelProfil!.users_id),
                       builder: (Context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           if (snapshot.hasError) {
@@ -239,7 +239,7 @@ class _HomepageLeaderboardState extends State<HomepageLeaderboard> {
                             return leaderboardWidget.listleaderBoard(data, heightList);
                           }
                         }
-                        return Center(child: CircularProgressIndicator());
+                        return leaderboardWidget.shimmerLeaderboard(width);
                       },
                     ),
                   ],

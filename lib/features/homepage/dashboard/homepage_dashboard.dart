@@ -15,6 +15,7 @@ import 'package:cermath_app/common/style/style_text.dart';
 import 'package:cermath_app/common/widget/widget_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomepageDashboard extends StatefulWidget {
   const HomepageDashboard({Key? key}) : super(key: key);
@@ -44,6 +45,7 @@ class _HomepageDashboardState extends State<HomepageDashboard> {
   List<ModelMateri> listMateri = [];
 
   var _classValue = "";
+  var _loading = true;
 
   Future<void> checkAuth() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -88,6 +90,7 @@ class _HomepageDashboardState extends State<HomepageDashboard> {
           .add(ModelMateri(idMateri: "", namaMateri: "", imageMateri: "", kelas: 0));
     }
 
+    _loading = false;
     setState(() {});
   }
 
@@ -273,7 +276,9 @@ class _HomepageDashboardState extends State<HomepageDashboard> {
                 ),
               ),
               widgetShared.divider(20.0, Colors.transparent),
-              widgetDashboard.kategoriMateri(listMateri: listMateri, context: context)
+              _loading ?
+              widgetDashboard.shimmerMateri(width)
+              : widgetDashboard.kategoriMateri(listMateri: listMateri, context: context)
             ],
           ),
         )

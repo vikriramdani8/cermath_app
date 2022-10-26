@@ -26,4 +26,14 @@ class ServiceLeaderboard {
     var fullUrl = "$_url/leaderboard/rangking/$userId";
     return await http.get(Uri.parse(fullUrl), headers: setHeaders());
   }
+
+  getFriend(userId, bodySearch) async {
+    await getToken();
+    var fullUrl ="$_url/leaderboard/search";
+    return await http.post(
+      Uri.parse(fullUrl),
+      body: bodySearch,
+      headers: setHeaders()
+    );
+  }
 }

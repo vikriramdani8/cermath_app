@@ -44,6 +44,7 @@ dependencies:
   flutter_tex: ^4.0.3+4
   circle_progress_bar: ^0.1.2
   loading_indicator: ^3.1.0
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:

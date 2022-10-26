@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:cermath_app/common/style/style_text.dart';
 import 'package:cermath_app/models/model_materi.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomepageDashboardWidget {
   StyleText styleText = new StyleText();
@@ -97,4 +98,52 @@ class HomepageDashboardWidget {
                     ))
                 .toList()));
   }
+
+  Widget shimmerMateri(width){
+    return SizedBox(
+      width: width,
+      height: 400,
+      child: Shimmer.fromColors(
+        baseColor: Colors.black12,
+        highlightColor: Colors.white60,
+        child: ListView.builder(
+          itemBuilder: (_, __) => Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                containerShimmer(),
+                containerShimmer(),
+                containerShimmer()
+              ],
+            ),
+          ),
+          itemCount: 2,
+        ),
+      ),
+    );
+  }
+
+  Widget containerShimmer(){
+    return Column(
+      children: [
+        Container(
+          width: 100.0,
+          height: 100.0,
+          color: Colors.white,
+        ),
+        const Divider(
+            height: 10,
+            color: Colors.transparent
+        ),
+        Container(
+          width: 100,
+          height: 20,
+          color: Colors.white,
+        )
+      ],
+    );
+  }
+
 }
