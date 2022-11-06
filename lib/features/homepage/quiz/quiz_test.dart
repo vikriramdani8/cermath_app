@@ -165,12 +165,21 @@ class _QuizTestState extends State<QuizTest> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '${currentIndex + 1}. ${quizList[currentIndex]['questionName']}',
-                      style: styleText.openSansBold(
-                          color: Colors.black87,
-                          size: 18.0,
-                          weightfont: false
+                    // Text(
+                    //   '${currentIndex + 1}. ${quizList[currentIndex]['questionName']}',
+                    //   style: styleText.openSansBold(
+                    //       color: Colors.black87,
+                    //       size: 18.0,
+                    //       weightfont: false
+                    //   ),
+                    // ),
+                    TeXView(
+                      child: TeXViewDocument(
+                        '${currentIndex + 1}. ${quizList[currentIndex]['questionName']}',
+                      ),
+                      style: TeXViewStyle(
+                        backgroundColor: Colors.transparent,
+                        contentColor: Colors.black
                       ),
                     ),
                     Center(

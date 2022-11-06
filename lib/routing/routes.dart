@@ -2,7 +2,10 @@ import 'package:cermath_app/features/homepage/homepage.dart';
 import 'package:cermath_app/features/homepage/leaderboard/leaderboard_friend.dart';
 import 'package:cermath_app/features/homepage/materi/materi_list.dart';
 import 'package:cermath_app/features/homepage/materi/materi_pdf.dart';
+import 'package:cermath_app/features/homepage/materi/materi_search.dart';
+import 'package:cermath_app/features/homepage/materi/materi_search_all.dart';
 import 'package:cermath_app/features/homepage/profile/profile_edit.dart';
+import 'package:cermath_app/features/homepage/profile/profile_password.dart';
 import 'package:cermath_app/features/homepage/quiz/quiz_list.dart';
 import 'package:cermath_app/features/homepage/quiz/quiz_result.dart';
 import 'package:cermath_app/features/homepage/quiz/quiz_test.dart';
@@ -62,7 +65,17 @@ class RouterGenerator {
         );
       case '/editPassword':
         return MaterialPageRoute(builder: (_) =>
-            LeaderboardFriend(),
+            ProfilePassword(),
+            settings: settings
+        );
+      case '/materiSearch':
+        return MaterialPageRoute(builder: (_) =>
+            MateriSearch(),
+            settings: settings
+        );
+      case '/materiSearchAll':
+        return MaterialPageRoute(builder: (_) =>
+            MateriSearchAll(),
             settings: settings
         );
       default:

@@ -115,7 +115,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     var data = {
       "fullname": namaLengkap.text,
       "username": username.text,
-      "usertype": _userTypeValue,
+      "usertype": '1',
       "gender": _genderValue,
       "classid": _classValue,
       "phone": phone.text
@@ -175,7 +175,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       SingleChildScrollView(
           child: Container(
               width: width,
-              height: height,
+              height: height-AppBar().preferredSize.height-40,
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: SingleChildScrollView(
                 child:  Column(
@@ -306,46 +306,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                       alignment: Alignment.centerLeft,
                       margin: EdgeInsets.only(bottom: 5),
                       child: Text(
-                        'Tipe Pengguna',
-                        style: styleText.openSansBold(
-                            color: Colors.black54, size: 15.0, weightfont: false),
-                      ),
-                    ),
-                    FormField(builder: (FormFieldState<String> state) {
-                      return InputDecorator(
-                          decoration: InputDecoration(
-                            contentPadding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                            errorStyle:
-                            TextStyle(color: Colors.redAccent, fontSize: 16.0),
-                            border: styleCommon.myinputborder(true),
-                            enabledBorder: styleCommon.myinputborder(true),
-                            focusedBorder: styleCommon.myfocusborder(true),
-                          ),
-                          isEmpty: _userTypeValue == '',
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              isDense: true,
-                              items: userTypeList
-                                  .map((data) => DropdownMenuItem<String>(
-                                value: data.id.toString(),
-                                child: Text(data.value),
-                              ))
-                                  .toList(),
-                              value: _userTypeValue,
-                              onChanged: (str) {
-                                setState(() {
-                                  _userTypeValue = str.toString();
-                                });
-                              },
-                            ),
-                          ));
-                    }),
-                    widgetShared.divider(20.0, Colors.transparent),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(bottom: 5),
-                      child: Text(
                         'Kelas',
                         style: styleText.openSansBold(
                             color: Colors.black54, size: 15.0, weightfont: false),
@@ -434,7 +394,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                             update();
                           },
                         )),
-                    widgetShared.divider(100.0, Colors.transparent),
                   ],
                 ),
               )

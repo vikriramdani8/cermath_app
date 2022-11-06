@@ -118,7 +118,7 @@ class _LoginInformationState extends State<LoginInformation> {
 
     var userMap = jsonDecode(userPref!);
     userMap['gender_id'] = int.parse(gender);
-    userMap['usertype_id'] = int.parse(usertype);
+    userMap['usertype_id'] = 1;
     userMap['class_id'] = int.parse(classid);
 
     prefs.setString('user', jsonEncode(userMap));
@@ -222,44 +222,6 @@ class _LoginInformationState extends State<LoginInformation> {
                                     onChanged: (str) {
                                       setState(() {
                                         _genderValue = str.toString();
-                                      });
-                                    },
-                                  ),
-                                )
-                            );
-                          }
-                      ),
-                      widgetShared.divider(30.0, Colors.transparent),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(bottom: 5),
-                        child: Text(
-                          'Tipe Pengguna',
-                          style: styleText.openSansBold(color: Colors.black54, size: 15.0, weightfont: false),
-                        ),
-                      ),
-                      FormField(
-                          builder: (FormFieldState<String> state) {
-                            return InputDecorator(
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                                  errorStyle: TextStyle(color: Colors.redAccent, fontSize: 16.0),
-                                  border: styleCommon.myinputborder(true),
-                                  enabledBorder: styleCommon.myinputborder(true),
-                                  focusedBorder: styleCommon.myfocusborder(true),
-                                ),
-                                isEmpty: _userTypeValue == '',
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                    isDense: true,
-                                    items: userTypeList.map((data) => DropdownMenuItem<String>(
-                                      value: data.id.toString(),
-                                      child: Text(data.value),
-                                    )).toList(),
-                                    value: _userTypeValue,
-                                    onChanged: (str) {
-                                      setState(() {
-                                        _userTypeValue = str.toString();
                                       });
                                     },
                                   ),

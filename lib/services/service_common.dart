@@ -51,4 +51,14 @@ class ServiceCommon {
     return await http.put(Uri.parse(fullUrl), body: data, headers: setHeaders(),
     );
   }
+
+  updatePassword(body, userId) async {
+    await getToken();
+    var fullUrl = "$_url/users/changePassword/$userId";
+    return await http.put(
+      Uri.parse(fullUrl),
+      body: body,
+      headers: setHeaders()
+    );
+  }
 }

@@ -36,4 +36,14 @@ class ServiceLeaderboard {
       headers: setHeaders()
     );
   }
+
+  followUser(body) async {
+    await getToken();
+    var fullUrl ="$_url/leaderboard/follow";
+    return await http.post(
+        Uri.parse(fullUrl),
+        body: body,
+        headers: setHeaders()
+    );
+  }
 }

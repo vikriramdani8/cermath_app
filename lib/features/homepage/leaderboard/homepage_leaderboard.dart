@@ -171,7 +171,7 @@ class _HomepageLeaderboardState extends State<HomepageLeaderboard> {
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  '${modelProfil!.score} XP',
+                                  '${modelProfil?.score != '' ? modelProfil!.score : '0'} XP',
                                   style: styleText.openSansBold(color: Colors.white, size: 17.0, weightfont: false),
                                 ),
                               )

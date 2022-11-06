@@ -215,13 +215,7 @@ class _HomepageDashboardState extends State<HomepageDashboard> {
                     widgetShared.divider(20.00, Colors.transparent),
                     InkWell(
                       onTap: () async {
-                        SharedPreferences preferences =
-                        await SharedPreferences.getInstance();
-                        await preferences.clear();
-                        // Navigator.pushNamed(context, "/testing");
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, "/login", (r) => false
-                        );
+                        Navigator.pushNamed(context, "/materiSearchAll");
                       },
                       child: Container(
                         height: 45,
@@ -261,7 +255,14 @@ class _HomepageDashboardState extends State<HomepageDashboard> {
                     ),
                     InkWell(
                       onTap: () {
-                        // Navigator.of(context).pop(false);
+                        Navigator.pushNamed(
+                          context,
+                          '/materiSearch',
+                          arguments: {
+                            'classId': _classValue,
+                            'className': classList[int.parse(_classValue)-1].value
+                          },
+                        );
                       },
                       child: Text(
                         'Lihat Semua',

@@ -253,23 +253,6 @@ class _HomepageProfileState extends State<HomepageProfile> {
                           weightfont:true
                       ),
                     ),
-                    widgetShared.divider(15.0, Colors.transparent),
-                    Text(
-                      'Tipe User',
-                      style: styleText.openSansBold(
-                          color: Colors.black87,
-                          size: 15.0,
-                          weightfont:false
-                      ),
-                    ),
-                    Text(
-                      modelProfil?.usertype_name == null ? '' : modelProfil!.usertype_name,
-                      style: styleText.openSansBold(
-                          color: Colors.black87,
-                          size: 15.0,
-                          weightfont:true
-                      ),
-                    )
                   ],
                 ),
               ),
@@ -395,9 +378,10 @@ class _HomepageProfileState extends State<HomepageProfile> {
                       ],
                     ),
                     onTap: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      //   return EditPassword();
-                      // }));
+                      Navigator.pushNamed(
+                        context,
+                        '/editPassword',
+                      );
                     },
                   ),
                   widgetShared.divider(15.0, Colors.transparent),

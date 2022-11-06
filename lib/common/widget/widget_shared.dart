@@ -87,4 +87,15 @@ class WidgetShared {
       ),
     );
   }
+
+  Widget label(text){
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(bottom: 5, top: 20),
+      child: Text(
+        text,
+        style: styleText.poppinsBold(color: Colors.black54, size: 15.00, weightfont: false),
+      ),
+    );
+  }
 }

@@ -200,14 +200,37 @@ class LeaderboardWidget{
                 Expanded(
                     flex: 1,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        data.sublist(0);
+                      },
                       child: Container(
-                          height: 50,
+                        margin: EdgeInsets.all(10),
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 1,
+                            color: Colors.white60
+                          ),
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(5)
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 1,
+                              offset: Offset(0, 1), // changes position of shadow
+                            ),
+                          ]
+                        ),
+                        child: Container(
                           child: Icon(
                             Icons.person_add,
                             color: styleColor.colorRed,
-                            size: 30,
-                          )
+                            size: 20,
+                          ),
+                        )
                       ),
                     )
                 )
@@ -215,6 +238,24 @@ class LeaderboardWidget{
             ),
           );
         }
+      ),
+    );
+  }
+
+  Widget listNotFound(){
+    return Container(
+      width: double.infinity,
+      alignment: Alignment.center,
+      padding: const EdgeInsets.only(
+        top: 50
+      ),
+      child: Text(
+        "User tidak ditemukan",
+        style: styleText.openSansBold(
+            color: Colors.black54,
+            size: 17.0,
+            weightfont: false
+        ),
       ),
     );
   }

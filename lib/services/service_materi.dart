@@ -25,6 +25,11 @@ class ServiceMateri{
     return await http.get(Uri.parse(fullrl));
   }
 
+  getAllMateriByClass(classes) async {
+    var fullrl = _url + "/materi/allLessonByClass/" + classes.toString();
+    return await http.get(Uri.parse(fullrl));
+  }
+
   getSubMateriByLessonId(lessonId) async {
     var fullrl = _url + "/lesson/listsublesson/" + lessonId.toString();
     return await http.get(Uri.parse(fullrl));
